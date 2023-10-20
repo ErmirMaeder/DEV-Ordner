@@ -34,7 +34,7 @@
     </div>
 
     <div id="controls">
-      <button id="Enter">Enter</button><br />
+      <button onclick="startGame()" id="Enter">Enter</button><br />
       </div>
 
     <div id="scoreboard">
@@ -188,10 +188,6 @@
 
         if (direction == "DOWN") {
           snake[0].y++;
-        }
-
-        if (direction =="Enter"){
-          startGame();
         }
 
         // Collision mit Futter
