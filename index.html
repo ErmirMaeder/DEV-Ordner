@@ -22,7 +22,7 @@
 
     <div id="controls">
     <button id="up">↑</button><br />
-  </div>
+    </div>
 
     <div id="controls">
       <button id="left">←</button><br />
@@ -32,6 +32,10 @@
     <div id="controls">
     <button id="down">↓</button><br />
     </div>
+
+    <div id="controls">
+      <button id="Enter">Enter</button><br />
+      </div>
 
     <div id="scoreboard">
       Punktestand: <span id="score">0</span>
@@ -53,7 +57,6 @@
       let foodcollected = false;
       let running = true;
       let speed = 100;
-     
       let score = 0;
 
       document.addEventListener("keydown", keyDown);
@@ -187,6 +190,10 @@
           snake[0].y++;
         }
 
+        if (direction =="Enter"){
+          startGame();
+        }
+
         // Collision mit Futter
         if (snake[0].x == food.x && snake[0].y == food.y) {
           foodcollected = true; // Futter eingesammelt
@@ -217,8 +224,9 @@
           running = false;
         }
 
-        if (e.keyCode == 13)
-        startGame();
+        if (e.keyCode == 13){
+        startGame();}
+
       }
 
       // Event-Handler für Touch
@@ -242,6 +250,16 @@
         .getElementById("right")
         .addEventListener("touchstart", function () {
           direction = "RIGHT";
+        });
+
+        document
+        .getElementById("Enter")
+        .addEventListener("touchstart", function (event) {
+       if(event.key === "Enter"){
+        event.preventDefault();
+        document.getElementById("Enter").click();
+       }
+
         });
 
       // ...
