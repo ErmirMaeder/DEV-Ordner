@@ -1,64 +1,37 @@
 <!DOCTYPE html>
 <html lang="de">
+
+<div id="head" class="head" data-text="Awesome">
+    <span class="actual-text">&nbsp;Snake&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;Snake&nbsp;</span>
+</div>
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Snake</title>
-    <style>
- #controls {
-  display: flex;
-}
+    <link rel="manifest" href="manifest.json">
 
-#left, #right {
-  font-size: 24px;
-  width: 60px;
-  height: 60px;
-}
-
-#left {
-  margin-left: 20px; /* Fügt etwas Abstand zwischen den Elementen hinzu */
-}
-
-#right {
-  margin-left: 60px; /* Fügt etwas Abstand zwischen den Elementen hinzu */
-}
+    <link rel="stylesheet" href="style.css">
 
 
-#up, #down {
-  font-size: 24px;
-  width: 60px;
-  height: 60px;
-}
-
-#up {
-  margin-left: 40px; /* Fügt etwas Abstand zwischen den Elementen hinzu */
-}
-
-#down {
-  margin-left: 40px; /* Fügt etwas Abstand zwischen den Elementen hinzu */
-}
-
-
-
-
-    </style>
   </head>
-  <body>
-    <canvas id="spielfeld" width="400" height="400"></canvas>
-
-    <div id="up">
-      <button id="up">↑</button><br />
-    </div>
+  <body id="body" display: flex;>
+    <canvas id="spielfeld" width="300" height="300"></canvas>
 
     <div id="controls">
-      <button id="left">←</button><br /> 
+    <button id="up">↑</button><br />
+  </div>
+
+    <div id="controls">
+      <button id="left">←</button><br />
       <button id="right">→</button><br />
     </div>
 
-    <div id="down">
+    <div id="controls">
     <button id="down">↓</button><br />
-  </div>
+    </div>
 
     <div id="scoreboard">
       Punktestand: <span id="score">0</span>
@@ -80,14 +53,20 @@
       let foodcollected = false;
       let running = true;
       let speed = 100;
+     
       let score = 0;
 
-      // AUFRAUF FUNKTONEN
-      placeFood(); // Food wird random platziert
-      setInterval(gameloop, speed);
-      //Snake.addEventListener('keydwon', steuerung);
       document.addEventListener("keydown", keyDown);
-      draw();
+    
+
+    function startGame() {
+    running = true;
+    snake = [{ x: 19, y: 3 }];
+    placeFood();  // Hier setzen wir das Intervall zurück
+    gameInterval = setInterval(gameloop, speed); // Verwenden des globalen Intervalls
+    draw();
+}
+
 
       // Funktionen
 
@@ -144,6 +123,7 @@
         ) {
           running = false;
           GameOverText();
+          clearInterval(gameInterval);
         }
       }
 
@@ -236,6 +216,9 @@
         if (e.keyCode == 32) {
           running = false;
         }
+
+        if (e.keyCode == 13)
+        startGame();
       }
 
       // Event-Handler für Touch
@@ -244,21 +227,24 @@
       });
 
       document
-        .getElementById("down").addEventListener("touchstart", function () {
+        .getElementById("down")
+        .addEventListener("touchstart", function () {
           direction = "DOWN";
         });
 
       document
-        .getElementById("left").addEventListener("touchstart", function () {
+        .getElementById("left")
+        .addEventListener("touchstart", function () {
           direction = "LEFT";
         });
 
       document
-        .getElementById("right").addEventListener("touchstart", function () {
+        .getElementById("right")
+        .addEventListener("touchstart", function () {
           direction = "RIGHT";
         });
 
-      
+      // ...
     </script>
   </body>
 </html>
