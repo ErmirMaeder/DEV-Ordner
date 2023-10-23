@@ -85,6 +85,9 @@ function update(){
 }
 
 function reStart(){
+    geschX = 0;
+    geschY = 0;
+    gameOver = false;
     placeFood();
     score = 0;
     document.addEventListener("keyup", keyDirection);
