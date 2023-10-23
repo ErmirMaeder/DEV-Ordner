@@ -6,7 +6,7 @@ body{
 
 h1{
     font-family: 'Times New Roman', Times, serif;
-    font-size: 50px ;
+    font-size: 30px ;
 }
 
 canvas{
@@ -17,7 +17,7 @@ canvas{
 #score{
     font-family: 'Times New Roman', Times, serif;
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 #reset{
@@ -34,8 +34,8 @@ canvas{
 #UP, #DOWN, #LEFT, #RIGHT{
 font-family:'Times New Roman', Times, serif;
 font-size: 50px;
-height: 90px;
-width: 90px;
+height: 80px;
+width: 80px;
 border: 1px solid;
 text-align: center;
 }
