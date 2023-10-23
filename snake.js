@@ -84,6 +84,14 @@ function update(){
 
 }
 
+function reStart(){
+    placeFood();
+    score = 0;
+    document.addEventListener("keyup", keyDirection);
+    //update();
+    setInterval(update, 200);
+}
+
 function keyDirection(e){
     if (e.code == "ArrowUp" && geschY != 1) {
         geschX = 0;
