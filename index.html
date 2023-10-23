@@ -1,264 +1,30 @@
 <!DOCTYPE html>
 <html lang="de">
-
-<div id="head" class="head" data-text="Awesome">
-    <span class="actual-text">&nbsp;Snake&nbsp;</span>
-    <span aria-hidden="true" class="hover-text">&nbsp;Snake&nbsp;</span>
-</div>
-
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake</title>
-    <link rel="manifest" href="manifest.json">
-
     <link rel="stylesheet" href="style.css">
-
-
-  </head>
-  <body id="body" display: flex;>
-    <canvas id="spielfeld" width="300" height="300"></canvas>
-
-    <div id="controls">
-    <button id="up">↑</button><br />
-    </div>
-
-    <div id="controls">
-      <button id="left">←</button><br />
-      <button id="right">→</button><br />
-    </div>
-
-    <div id="controls">
-    <button id="down">↓</button><br />
-    </div>
-
-    <div id="controls">
-      <button onclick="startGame()" id="Enter">Enter</button><br />
-      </div>
-
-    <div id="scoreboard">
-      Punktestand: <span id="score">0</span>
-      <br />
-      Highscore: <span id="highscore">0</span>
-    </div>
-
-    <script>
-      // Variabeln
-      let canvas = document.getElementById("spielfeld");
-      let ctx = canvas.getContext("2d");
-      let rows = 20;
-      let cols = 20;
-      let snake = [{ x: 19, y: 3 }];
-      let food;
-      let cellWidth = canvas.width / cols;
-      let cellHeight = canvas.height / rows;
-      let direction = "LEFT"; // Start Richtung
-      let foodcollected = false;
-      let running = true;
-      let speed = 100;
-      let score = 0;
-
-      document.addEventListener("keydown", keyDown);
+    <script src="snake.js"></script>
+</head>
+<body>
+    <h1>Snake</h1>
+    <div id="score">Score: <span id ="scoreValue">0</span></div>
+    <canvas id="board"></canvas>
     
+    <div>
+    <button id="UP"onclick="changeDirection('ArrowUp')">↑</button>
+    </div>
+    
+    <div>
+    <button id="LEFT"onclick="changeDirection('ArrowLeft')">←</button>
+    <button id="RIGHT"onclick="changeDirection('ArrowRight')">→</button>
+    </div>
+    
+    <button id="DOWN"onclick="changeDirection('ArrowDown')">↓</button>
+    <div>
+    <button id="reset">Reset</button>
+    </div>
 
-    function startGame() {
-    running = true;
-    snake = [{ x: 19, y: 3 }];
-    placeFood();  // Hier setzen wir das Intervall zurück
-    gameInterval = setInterval(gameloop, speed); // Verwenden des globalen Intervalls
-    draw();
-}
-
-
-      // Funktionen
-
-      function draw() {
-        //Spielfeld
-        ctx.fillStyle = "gray";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        //Snake
-        ctx.fillStyle = "white";
-        snake.forEach((part) => add(part.x, part.y));
-
-        //Food
-        ctx.fillStyle = "red";
-        add(food.x, food.y);
-
-        if (running) {
-          requestAnimationFrame(draw);
-        }
-      }
-      function GameOverText() {
-        ctx.fillStyle = "red";
-        ctx.font = "36px Arial";
-        ctx.strokeStyle = "black"; // Rahmenfarbe des Textes
-        ctx.lineWidth = 3; // Breite des Rahmens
-
-        let text = "Game Over";
-        let textWidth = ctx.measureText(text).width;
-
-        // Horizontale Position berechnen
-        let x = (canvas.width - textWidth) / 2;
-
-        // Vertikale Position berechnen (etwas unterhalb der Mitte)
-        let y = canvas.height / 2 + 20;
-
-        // Den Text mit Rahmen zeichnen
-        ctx.strokeText(text, x, y);
-        ctx.fillText(text, x, y);
-      }
-
-      function testGameOver() {
-        let firstPart = snake[0];
-        let otherParts = snake.slice(1);
-        let dublicatetPart = otherParts.find(
-          (part) => part.x == firstPart.x && part.y == firstPart.y
-        );
-        // collision gegen Wand
-        if (
-          snake[0].x == -1 ||
-          snake[0].x == cols ||
-          snake[0].y == -1 ||
-          snake[0].y == rows ||
-          dublicatetPart
-        ) {
-          running = false;
-          GameOverText();
-          clearInterval(gameInterval);
-        }
-      }
-
-      function placeFood() {
-        let randomX = Math.floor(Math.random() * cols);
-        let randomY = Math.floor(Math.random() * rows);
-
-        food = { x: randomX, y: randomY };
-      }
-
-      function add(x, y) {
-        ctx.fillRect(
-          x * cellHeight,
-          y * cellWidth,
-          cellWidth - 1,
-          cellHeight - 1
-        );
-      }
-      function updateScoreboard() {
-        document.getElementById("score").textContent = score;
-      }
-
-      function shiftSanke() {
-        for (let i = snake.length - 1; i > 0; i--) {
-          const part = snake[i];
-          const lastpart = snake[i - 1];
-          part.x = lastpart.x;
-          part.y = lastpart.y;
-        }
-      }
-
-      function gameloop() {
-        testGameOver();
-
-        if (foodcollected) {
-          snake = [
-            {
-              x: snake[0].x,
-              y: snake[0].y,
-            },
-            ...snake,
-          ];
-
-          foodcollected = false;
-        }
-        shiftSanke();
-
-        if (direction == "LEFT") {
-          snake[0].x--;
-        }
-
-        if (direction == "RIGHT") {
-          snake[0].x++;
-        }
-
-        if (direction == "UP") {
-          snake[0].y--;
-        }
-
-        if (direction == "DOWN") {
-          snake[0].y++;
-        }
-
-        // Collision mit Futter
-        if (snake[0].x == food.x && snake[0].y == food.y) {
-          foodcollected = true; // Futter eingesammelt
-          placeFood();
-          score += 3;
-          updateScoreboard();
-        }
-      }
-
-      function keyDown(e) {
-        if (e.keyCode == 37 && direction !== "RIGHT") {
-          direction = "LEFT";
-        }
-
-        if (e.keyCode == 38 && direction !== "DOWN") {
-          direction = "UP";
-        }
-
-        if (e.keyCode == 39 && direction !== "LEFT") {
-          direction = "RIGHT";
-        }
-
-        if (e.keyCode == 40 && direction !== "UP") {
-          direction = "DOWN";
-        }
-
-        if (e.keyCode == 32) {
-          running = false;
-        }
-
-        if (e.keyCode == 13){
-        startGame();}
-
-      }
-
-      // Event-Handler für Touch
-      document.getElementById("up").addEventListener("touchstart", function () {
-        direction = "UP";
-      });
-
-      document
-        .getElementById("down")
-        .addEventListener("touchstart", function () {
-          direction = "DOWN";
-        });
-
-      document
-        .getElementById("left")
-        .addEventListener("touchstart", function () {
-          direction = "LEFT";
-        });
-
-      document
-        .getElementById("right")
-        .addEventListener("touchstart", function () {
-          direction = "RIGHT";
-        });
-
-        document
-        .getElementById("Enter")
-        .addEventListener("touchstart", function (event) {
-       if(event.key === "Enter"){
-        event.preventDefault();
-        document.getElementById("Enter").click();
-       }
-
-        });
-
-      // ...
-    </script>
-  </body>
+</body>
 </html>
