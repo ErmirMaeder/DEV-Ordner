@@ -10,8 +10,7 @@ h1{
 }
 
 canvas{
-    border: 3px solid;
-    margin-bottom: 10px;
+    border: 3px dashed;
 }
 
 #score{
@@ -24,11 +23,12 @@ canvas{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     width: 80px;
-    height: 40px;
+    height: 30px;
     border: 3px solid;
     border-radius: 10px;
     cursor: pointer;
-    margin-top: 40px;
+    margin-left: 230px;
+
 }
 
 #UP, #DOWN, #LEFT, #RIGHT{
@@ -40,12 +40,10 @@ border: 1px solid;
 border-radius: 5px;
 }
 
-
+#UP{
+    margin-top: -20px;
+}
 
 #RIGHT{
     margin-left: 100px;
 }
-
-
-
-
