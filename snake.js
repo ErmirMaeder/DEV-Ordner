@@ -8,17 +8,20 @@ let context;
 let score = 0;
 
 //snake head
-let snakeX = blockSize * 5;
-let snakeY = blockSize * 5;
+let snakeX = blockSize * cols/2;
+let snakeY = blockSize * rows/2;
 let geschX = 0;
 let geschY = 0;
 let snakebody =[];
+let speed = 200;
 
 //food
 let foodX;
 let foodY;
 
 let gameOver = false;
+
+let gameInterval = setInterval(update, speed);
 
 
 window.onload = function(){
@@ -29,8 +32,8 @@ window.onload = function(){
 
     placeFood();
     document.addEventListener("keyup", keyDirection);
-    //update();
-    setInterval(update, 200);
+    update();
+
 }
 
 function update(){
@@ -50,6 +53,9 @@ function update(){
         placeFood();
         score += 3;
         document.getElementById('scoreValue').textContent = score;
+        speed -= 10;
+        clearInterval(gameInterval);
+        gameInterval = setInterval(update, speed);
     }
     
     for (let i = snakebody.length-1; i > 0; i--) {
@@ -81,22 +87,25 @@ function update(){
         alert("Game Over!")
       }
     }
-
 }
 
 function reStart(){
-    snakeX = blockSize * 5;
-    snakeY = blockSize * 5;
-    geschX = 0;
-    geschY = 0;
-    snakebody =[];
-    gameOver = false;
-    placeFood();
-    score = 0;
-    document.addEventListener("keyup", keyDirection);
-    //update();
-    //setInterval(update, 200);
-}
+        speed = 200;
+        clearInterval(gameInterval); // Aktuelles Intervall stoppen
+        snakeX = blockSize * cols/2;
+        snakeY = blockSize * rows/2;
+        geschX = 0;
+        geschY = 0;
+        snakebody =[];
+        score = 0;
+        document.getElementById('scoreValue').textContent = score; // Wert im HTML aktualisieren
+        snakebody =[];
+        gameOver = false;
+        placeFood();
+        document.addEventListener("keyup", keyDirection);
+        gameInterval = setInterval(update, speed); // Neues Intervall starten
+    }
+    
 
 function keyDirection(e){
     if (e.code == "ArrowUp" && geschY != 1) {
@@ -147,4 +156,9 @@ function changeDirection(direction){
 function placeFood(){ 
     foodX = Math.floor(Math.random() * cols) * blockSize;
     foodY = Math.floor(Math.random() * rows) * blockSize;
+}
+
+function placeSnake(){
+    snakeX = Math.floor(Math.random()*cols)*blockSize;
+    snakeY = Math.floor(Math.random()*cols)*blockSize;
 }
