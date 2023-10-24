@@ -85,14 +85,17 @@ function update(){
 }
 
 function reStart(){
+    snakeX = blockSize * 5;
+    snakeY = blockSize * 5;
     geschX = 0;
     geschY = 0;
+    snakebody =[];
     gameOver = false;
     placeFood();
     score = 0;
     document.addEventListener("keyup", keyDirection);
     //update();
-    setInterval(update, 200);
+    //setInterval(update, 200);
 }
 
 function keyDirection(e){
@@ -145,6 +148,3 @@ function placeFood(){
     foodX = Math.floor(Math.random() * cols) * blockSize;
     foodY = Math.floor(Math.random() * rows) * blockSize;
 }
-
-
-
