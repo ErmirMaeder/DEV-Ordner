@@ -9,11 +9,14 @@
 </head>
 <body>
     <h2>Snake</h2>
-    <div id="score">Score: <span id ="scoreValue">0</span></div>
+    <div id="score">Score: <span id ="scoreValue">0</span>
+    <button id="reset"onclick="reStart()">Reset</button>
+    </div>
+    
     <canvas id="board"></canvas>
     
+    
     <div>
-    <button id="reset"onclick="reStart()">Reset</button>
     <button id="UP"onclick="changeDirection('ArrowUp')">↑</button>
     
     </div>
