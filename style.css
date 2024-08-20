@@ -11,6 +11,7 @@ h1{
 
 canvas{
     border: 3px dashed;
+    margin-bottom: 40px;
 }
 
 #score{
@@ -27,7 +28,7 @@ canvas{
     border: 3px solid;
     border-radius: 10px;
     cursor: pointer;
-    margin-left: 230px;
+    margin: 20px;
 
 }
 
@@ -42,7 +43,7 @@ border-radius: 5px;
 
 #UP{
     margin-top: -20px;
-    align-items: center;
+    
 }
 
 #RIGHT{
